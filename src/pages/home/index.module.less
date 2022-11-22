@@ -1,0 +1,49 @@
+.layout{
+  height: 100%;
+  .header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 20px;
+    color: #fff;
+    font-size: 18px;
+    .logo{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .user{
+      min-width: 152px;
+      :hover{
+        :global{
+          .ant-space-item{
+            color: #1677ff;
+            cursor: pointer;
+          }
+        }
+      }
+      :global{
+        .ant-space{
+          gap: 0 !important;
+          .ant-space-item:first-child{
+            font-size: 22px;
+          }
+        }
+      }
+    }
+  }
+  .breadDiv{
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    .trigger{
+      margin-right: 15px;
+    }
+  }
+  .contentMain{
+    width: 100%;
+    height: calc(100% - 30px);
+    padding: 0 10px;
+  }
+}
