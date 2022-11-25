@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({command}) => ({
   plugins: [react()],
   base:'/',
   server:{
@@ -23,27 +23,27 @@ export default defineConfig({
       '@':path.resolve(__dirname,'src')
     }
   },
-  // css:{
-  //   modules:{
-  //     localsConvention:'camelCaseOnly',
-  //     scopeBehaviour:'local'
-  //   }
-  // },
   build:{
+    // reportCompressedSize: false, // gzip压缩大小报告
+    // chunkSizeWarningLimit: 2000, // 打包大小超出警告的限制
+    assetsDir:'static/assets',
     rollupOptions:{
       output: {
         assetFileNames: (AssetInfo)=>{
           if(/\.(png|jpg|gif|svg)$/.test(AssetInfo.name)){
-            return 'img/[name].[ext]'
+            return 'static/img/[name].[ext]'
           }else if(/\.(ttf|woff)$/.test(AssetInfo.name)){
-            return 'font/[name].[hash].[ext]'
+            return 'static/font/[name].[hash].[ext]'
           }else{
-            return '[ext]/[name].[hash].[ext]'
+            return 'static/[ext]/[name].[hash].[ext]'
           }
         },
-        chunkFileNames: 'js/[name].[hash].js',
-        entryFileNames: 'js/[name].[hash].js'
+        chunkFileNames: 'static/js/[name].[hash].js',
+        entryFileNames: 'static/js/[name].[hash].js',
       }
     }
+  },
+  esbuild:{
+    drop: command === 'build' ? ['console','debugger'] : []
   }
-})
+}))

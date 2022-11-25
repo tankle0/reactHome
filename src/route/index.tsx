@@ -1,20 +1,25 @@
+import { lazy } from "react";
 import { createBrowserRouter,Navigate } from "react-router-dom";
-import Login from '../pages/login';
-import ErrorPage from "../pages/error";
-import App from "../App";
-import Dashboard from "@/pages/dashboard";
-import System from "@/pages/system";
+import ErrorPage from "@/pages/error";
+import Home from "@/pages/home";
+import Login from "@/pages/login";
 
-const router  = createBrowserRouter([
+// 使用懒加载的页面
+// const Home = lazy(() => import('@/pages/home'))
+// const Login = lazy(() => import('@/pages/login'))
+// const ErrorPage = lazy(() => import('@/pages/error'))
+const Dashboard = lazy(() => import('@/pages/dashboard'))
+const User = lazy(() => import('@/pages/system/user'))
+const Role = lazy(() => import('@/pages/system/role'))
+
+const router  = [
   {
     path:'/',
     element: <Navigate to="/dashboard" /> ,
-    errorElement: <ErrorPage />,
-    children:[],
   },
   {
     path:'/dashboard',
-    element: <App /> ,
+    element: <Home /> ,
     children:[
       {
         path:'',
@@ -24,11 +29,15 @@ const router  = createBrowserRouter([
   },
   {
     path:'/system',
-    element: <App /> ,
+    element: <Home /> ,
     children:[
       {
-        path:'',
-        element: <System />
+        path:'user',
+        element: <User />
+      },
+      {
+        path:'role',
+        element: <Role />
       }
     ],
   },
@@ -36,7 +45,11 @@ const router  = createBrowserRouter([
     path:'/login',
     element: <Login />
   },
-])
+  {
+    path:'*',
+    element: <ErrorPage />,
+  },
+]
 
 
 export default router

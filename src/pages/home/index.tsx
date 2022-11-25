@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Outlet, Link } from "react-router-dom";
-import { Layout, Dropdown, Space } from "antd"
+import React, { useState, Suspense } from "react";
+import { Link, Outlet } from "react-router-dom";
+import { Layout, Dropdown, Space, Spin } from "antd"
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -17,24 +17,31 @@ import styles from "./index.module.less";
 const { Header, Content } = Layout;
 const menu = [
   {
-    key: '1',
-    icon: <UserOutlined />,
-    label: 'nav 1',
-    children:[{
-      key: '1-1',
-      icon: <UserOutlined />,
-      label: 'nav 1-1',
-    }]
-  },
-  {
-    key: '2',
+    key: '/dashboard',
     icon: <VideoCameraOutlined />,
-    label: 'nav 2',
+    label: '首页',
   },
   {
-    key: '3',
+    key: '/system',
+    icon: <UserOutlined />,
+    label: '系统设置',
+    children:[
+      {
+        key: '/system/user',
+        icon: <UserOutlined />,
+        label: '用户设置',
+      },
+      {
+        key: '/system/role',
+        icon: <UserOutlined />,
+        label: '角色设置',
+      }
+    ]
+  },
+  {
+    key: '/book',
     icon: <UploadOutlined />,
-    label: 'nav 3',
+    label: '前端资料',
   },
 ];
 const items: MenuProps['items'] = [
@@ -99,7 +106,9 @@ const Home:React.FC = () => {
             <Bread breadArr={[{path:'/dashboard',name:'首页'},{path:'/dashboard',name:'系统设置'}]} />
           </div>
           <div className={styles.contentMain}>
-            <Outlet />
+            <Suspense fallback={<Spin tip="Loading..." />}>
+              <Outlet />
+            </Suspense>
           </div>
         </Content>
       </Layout>
