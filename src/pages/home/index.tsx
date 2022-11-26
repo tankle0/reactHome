@@ -1,6 +1,6 @@
-import React, { useState, Suspense } from "react";
+import React, { useState, Suspense, useMemo, useCallback } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { Layout, Dropdown, Space } from "antd"
+import { Layout, Dropdown, Space, Modal } from "antd"
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -8,8 +8,10 @@ import {
   DownOutlined,
   VideoCameraOutlined,
   UploadOutlined,
+  ExclamationCircleOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from "antd";
+import { useNavigate } from "react-router-dom";
 import Bread from "./Bread";
 import Siders from "./Sider";
 import Loading from "@/components/Loading";
@@ -45,40 +47,56 @@ const menu = [
     label: '前端资料',
   },
 ];
-const items: MenuProps['items'] = [
-  {
-    label: (
-      <Link to="/dashboard">
-        首页
-      </Link>
-    ),
-    key: '0',
-  },
-  {
-    type: 'divider',
-  },
-  {
-    label: (
-      <Link to="/system/user">
-        系统设置
-      </Link>
-    ),
-    key: '1',
-  },
-  {
-    type: 'divider',
-  },
-  {
-    label: (
-      <a rel="noopener noreferrer" href="#">
-        退出登录
-      </a>
-    ),
-    key: '2',
-  }
-];
 
 const Home:React.FC = () => {
+  const navigate = useNavigate()
+  const loginOut = useCallback(() => {
+    Modal.confirm({
+      title: 'Confirm',
+      icon: <ExclamationCircleOutlined />,
+      content: '确认退出登录吗?',
+      okText: '确认',
+      cancelText: '取消',
+      onOk(){
+        localStorage.removeItem('token')
+        navigate('/login')
+      }
+    });
+  },[])
+  const items: MenuProps['items'] = useMemo(() => (
+    [
+      {
+        label: (
+          <Link to="/dashboard">
+            首页
+          </Link>
+        ),
+        key: '0',
+      },
+      {
+        type: 'divider',
+      },
+      {
+        label: (
+          <Link to="/system/user">
+            系统设置
+          </Link>
+        ),
+        key: '1',
+      },
+      {
+        type: 'divider',
+      },
+      {
+        label: (
+          <a onClick={loginOut}>
+            退出登录
+          </a>
+        ),
+        key: '2',
+      }
+    ]
+  ),[]);
   const [collapsed, setCollapsed] = useState(false);
   const name = localStorage.getItem("name") || '外星人'
   return (
