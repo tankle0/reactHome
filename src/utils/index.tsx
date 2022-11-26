@@ -1,6 +1,4 @@
 import { menuType } from "@/types/home";
-import React from "react";
-import { useLocation, Outlet, Navigate } from "react-router-dom";
 
 /* 
   获取assets文件夹内的图片路径，name为文件名+文件类型
@@ -25,4 +23,3 @@ export const getParentKey = (key:string,menu:Array<menuType>,current?:menuType):
   }
   return name
 }
-

@@ -1,6 +1,6 @@
 import React, { useState, Suspense } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { Layout, Dropdown, Space, Spin } from "antd"
+import { Layout, Dropdown, Space } from "antd"
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -12,6 +12,7 @@ import {
 import type { MenuProps } from "antd";
 import Bread from "./Bread";
 import Siders from "./Sider";
+import Loading from "@/components/Loading";
 import styles from "./index.module.less";
 
 const { Header, Content } = Layout;
@@ -58,7 +59,7 @@ const items: MenuProps['items'] = [
   },
   {
     label: (
-      <Link to="/system">
+      <Link to="/system/user">
         系统设置
       </Link>
     ),
@@ -79,6 +80,7 @@ const items: MenuProps['items'] = [
 
 const Home:React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const name = localStorage.getItem("name") || '外星人'
   return (
     <Layout className={styles.layout}>
       <Header className={styles.header}>
@@ -86,7 +88,7 @@ const Home:React.FC = () => {
           React+TypeScript 后台管理系统模板
         </div>
         <div className={styles.user}>
-          <span>欢迎您~tank</span>&nbsp;&nbsp;&nbsp;
+          <span>欢迎您~{name}</span>&nbsp;&nbsp;&nbsp;
           <Dropdown menu={{ items }}>
             <Space>
               <UserOutlined />
@@ -106,7 +108,7 @@ const Home:React.FC = () => {
             <Bread breadArr={[{path:'/dashboard',name:'首页'},{path:'/dashboard',name:'系统设置'}]} />
           </div>
           <div className={styles.contentMain}>
-            <Suspense fallback={<Spin tip="Loading..." />}>
+            <Suspense fallback={<Loading />}>
               <Outlet />
             </Suspense>
           </div>

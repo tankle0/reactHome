@@ -5,9 +5,6 @@ import Home from "@/pages/home";
 import Login from "@/pages/login";
 
 // 使用懒加载的页面
-// const Home = lazy(() => import('@/pages/home'))
-// const Login = lazy(() => import('@/pages/login'))
-// const ErrorPage = lazy(() => import('@/pages/error'))
 const Dashboard = lazy(() => import('@/pages/dashboard'))
 const User = lazy(() => import('@/pages/system/user'))
 const Role = lazy(() => import('@/pages/system/role'))

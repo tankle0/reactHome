@@ -1,15 +1,17 @@
-import React from 'react'
-import { Button, Input, Form, Checkbox } from 'antd'
+import React, { useCallback } from 'react'
+import { Button, Input, Form, Checkbox, message } from 'antd'
+import { useNavigate } from 'react-router-dom'
 import { getImgUrl } from '@/utils'
 import styles from './index.module.less'
 
 const Login:React.FC = () => {
-  const onFinish = () => {
-    
-  }
-  const onFinishFailed = () => {
-    
-  }
+  const navigate = useNavigate()
+  const onFinish = useCallback((value:any) => {
+    if(value.remember) localStorage.setItem('name',value.username)
+    localStorage.setItem('token',`${value.username}${Date.now()}`)
+    message.success(`登录成功，欢迎您，${value.username}！`)
+    navigate('/')
+  },[])
   return (
     <div className={styles.loginDiv}>
       <div className={styles.title}>
@@ -23,10 +25,13 @@ const Login:React.FC = () => {
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            initialValues={{ remember: true }}
+            scrollToFirstError
             onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
             autoComplete="off"
+            initialValues={{ 
+              remember: true,
+              username: localStorage.getItem('name') || ''
+            }}
           >
             <Form.Item
               label="用户名"

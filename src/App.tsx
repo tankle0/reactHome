@@ -25,7 +25,7 @@ const EnterRouter:React.FC = () => {
         })
         message.open({
           type: 'warning',
-          content: '请先进行登录',
+          content: '请先进行登录!',
         })
         navigate('/login')
       }
@@ -44,7 +44,7 @@ const beforeRouteEnter = ():React.ReactNode => {
   return <EnterRouter />
 }
 
-const App:React.FC = () => {
+const App:React.FC = (props:any) => {
   return (
     <div className="App">
       {beforeRouteEnter()}
