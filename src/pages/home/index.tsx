@@ -16,6 +16,7 @@ import Bread from "./Bread";
 import Siders from "./Sider";
 import Loading from "@/components/Loading";
 import styles from "./index.module.less";
+import { useAppSelector } from "@/hooks";
 
 const { Header, Content } = Layout;
 const menu = [
@@ -98,12 +99,13 @@ const Home:React.FC = () => {
     ]
   ),[]);
   const [collapsed, setCollapsed] = useState(false);
-  const name = localStorage.getItem("name") || '外星人'
+  const name = localStorage.getItem("name") || '外星人';
+  const num = useAppSelector((state)=>state.home.num)
   return (
     <Layout className={styles.layout}>
       <Header className={styles.header}>
         <div className={styles.logo}>
-          React+TypeScript 后台管理系统模板
+          React+TypeScript 后台管理系统模板{num}
         </div>
         <div className={styles.user}>
           <span>欢迎您~{name}</span>&nbsp;&nbsp;&nbsp;
