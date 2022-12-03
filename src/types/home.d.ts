@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+import type { MenuProps } from "antd";
 
 export interface breadType {
   path:string,
@@ -22,14 +23,11 @@ export interface UpdateUserResponse {
 }
 
 export interface User {
-  id: string
-  first_name: string
-  last_name: string
-  email: string,
-  age:number
+  id?: string
+  name: string
 }
 
 export interface HomeState {
-  num:number,
-  user:User
+  menu:Array<menuType>,
+  user:User,
 }

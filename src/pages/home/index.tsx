@@ -1,4 +1,4 @@
-import React, { useState, Suspense, useMemo, useCallback } from "react";
+import React, { useState, Suspense, useMemo, useCallback, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { Layout, Dropdown, Space, Modal } from "antd"
 import {
@@ -6,8 +6,6 @@ import {
   MenuUnfoldOutlined,
   UserOutlined,
   DownOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
   ExclamationCircleOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from "antd";
@@ -16,40 +14,28 @@ import Bread from "./Bread";
 import Siders from "./Sider";
 import Loading from "@/components/Loading";
 import styles from "./index.module.less";
-import { useAppSelector } from "@/hooks";
+import _ from "lodash";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { update } from "@/store/home/asyncReducers";
 
 const { Header, Content } = Layout;
-const menu = [
-  {
-    key: '/dashboard',
-    icon: <VideoCameraOutlined />,
-    label: '首页',
-  },
-  {
-    key: '/system',
-    icon: <UserOutlined />,
-    label: '系统设置',
-    children:[
-      {
-        key: '/system/user',
-        icon: <UserOutlined />,
-        label: '用户设置',
-      },
-      {
-        key: '/system/role',
-        icon: <UserOutlined />,
-        label: '角色设置',
-      }
-    ]
-  },
-  {
-    key: '/book',
-    icon: <UploadOutlined />,
-    label: '前端资料',
-  },
-];
 
 const Home:React.FC = () => {
+  // 调用异步reducer写法
+  // const dispatch = useAppDispatch()
+  // const loginOut = () => {
+  //   dispatch(update({id:'1'}))
+  // }
+  useEffect(() => {
+    if(document.body.offsetWidth <= 700) setCollapsed(true)
+    else setCollapsed(false)
+    window.onresize = _.throttle((e:any) => {
+      let width = e.target.innerWidth
+      if(width <= 700) setCollapsed(true)
+      else setCollapsed(false)
+    },500)
+    return () => {window.onresize = null}
+  },[])
   const navigate = useNavigate()
   const loginOut = useCallback(() => {
     Modal.confirm({
@@ -99,13 +85,13 @@ const Home:React.FC = () => {
     ]
   ),[]);
   const [collapsed, setCollapsed] = useState(false);
-  const name = localStorage.getItem("name") || '外星人';
-  const num = useAppSelector((state)=>state.home.num)
+  const { menu, user:{name} } = useAppSelector((state) => state.home)
+
   return (
     <Layout className={styles.layout}>
       <Header className={styles.header}>
         <div className={styles.logo}>
-          React+TypeScript 后台管理系统模板{num}
+          React+TypeScript 后台管理系统模板
         </div>
         <div className={styles.user}>
           <span>欢迎您~{name}</span>&nbsp;&nbsp;&nbsp;

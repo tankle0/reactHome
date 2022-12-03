@@ -8,7 +8,7 @@ import 'normalize.css'
 import './index.less'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+  <>
     {/* basename与vite中的配置的base一致 */}
     {/* <BrowserRouter basename='/reactHome/'>
       <App />
@@ -19,5 +19,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <App />
       </HashRouter>
     </Provider>
-  </React.StrictMode>
+  </>
 )

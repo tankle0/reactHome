@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit"
-import homeStore from "./homeStore"
+import homeStore from "./home/homeStore"
 
+// 全局store,合并其他模块化的store
 const store =  configureStore({
   reducer:{
     home:homeStore
