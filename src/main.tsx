@@ -8,16 +8,14 @@ import 'normalize.css'
 import './index.less'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <>
+  <Provider store={store}>
     {/* basename与vite中的配置的base一致 */}
     {/* <BrowserRouter basename='/reactHome/'>
       <App />
     </BrowserRouter> */}
     {/* 部署到github需使用hash模式，解决刷新404 */}
-    <Provider store={store}>
-      <HashRouter>
-        <App />
-      </HashRouter>
-    </Provider>
-  </>
+    <HashRouter>
+      <App />
+    </HashRouter>
+  </Provider>
 )

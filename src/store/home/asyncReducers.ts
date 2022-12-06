@@ -8,7 +8,7 @@ export const update = createAsyncThunk<
   { id: string } & Partial<User> // 传入的参数
 >('home/update',async(userData, { rejectWithValue })=>{
   try {
-    // const { id, ...fields } = userData
+    const { id, ...fields } = userData
     const response = await Promise.resolve({data:{user:{id:'22',name:'chen'}}})
     return response.data.user
   } catch (err:any) {

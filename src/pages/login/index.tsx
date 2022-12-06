@@ -2,15 +2,20 @@ import React, { useCallback } from 'react'
 import { Button, Input, Form, Checkbox, message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { getImgUrl } from '@/utils'
+import { useAppDispatch } from '@/hooks'
 import styles from './index.module.less'
 
 const Login:React.FC = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const onFinish = useCallback((value:any) => {
     if(value.remember) localStorage.setItem('name',value.username)
     localStorage.setItem('token',`${value.username}${Date.now()}`)
     message.success(`登录成功，欢迎您，${value.username}！`)
     navigate('/')
+    setTimeout(() => {
+      dispatch({type:'home/updateState',payload:{user:{name:value.username}}})
+    }, 500);
   },[])
   return (
     <div className={styles.loginDiv}>

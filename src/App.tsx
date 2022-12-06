@@ -44,10 +44,10 @@ const beforeRouteEnter = ():React.ReactNode => {
   return <EnterRouter />
 }
 
-const App:React.FC = (props:any) => {
+const App:React.FC = () => {
   return (
     <div className="App">
-      {beforeRouteEnter()}
+      <EnterRouter />
     </div>
   )
 }

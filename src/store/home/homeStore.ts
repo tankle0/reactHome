@@ -4,45 +4,12 @@
   文档地址: https://redux.js.org/style-guide/#do-not-put-non-serializable-values-in-state-or-actions
 */
 import { createSlice } from '@reduxjs/toolkit';
-import {
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-} from '@ant-design/icons';
 import type { HomeState } from '@/types/home';
 import { update } from './asyncReducers';
 
 // 初始化state
 const initialState = {
-  menu:[
-    {
-      key: '/dashboard',
-      icon: <VideoCameraOutlined />,
-      label: '首页',
-    },
-    {
-      key: '/system',
-      icon: <UserOutlined />,
-      label: '系统设置',
-      children:[
-        {
-          key: '/system/user',
-          icon: <UserOutlined />,
-          label: '用户设置',
-        },
-        {
-          key: '/system/role',
-          icon: <UserOutlined />,
-          label: '角色设置',
-        }
-      ]
-    },
-    {
-      key: '/book',
-      icon: <UploadOutlined />,
-      label: '前端资料',
-    },
-  ], // 建议写在页面内，因为内部包含图标组件，不符合redux规定，控制台报错，详见顶部文档
+  currentPathname:'',
   user:{
     id:'',
     name:localStorage.getItem('name') || '外星人'
@@ -56,7 +23,7 @@ export const homeStore = createSlice({
   // 同步reducers
   reducers:{
     updateState: (state, { payload }) => {
-      state = {
+      return {
         ...state,
         ...payload
       }
@@ -74,7 +41,12 @@ export const homeStore = createSlice({
     */
     builder.addCase(update.fulfilled,(state,{ payload }) => {
       console.log(payload,'payload');
-      state.user = payload
+      return {
+        ...state,
+        user:{
+          ...payload
+        }
+      }
     })
   }
 })

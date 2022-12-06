@@ -6,6 +6,11 @@ import {
   MenuUnfoldOutlined,
   UserOutlined,
   DownOutlined,
+  HomeOutlined,
+  FolderOpenOutlined,
+  SettingOutlined,
+  TeamOutlined,
+  SkinOutlined,
   ExclamationCircleOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from "antd";
@@ -26,6 +31,37 @@ const Home:React.FC = () => {
   // const loginOut = () => {
   //   dispatch(update({id:'1'}))
   // }
+
+  // menu建议写在页面内，因为内部包含图标组件，写在redux内不符合redux规定，控制台报错，详见store文件顶部文档
+  const menu = [
+    {
+      key: '/dashboard',
+      icon: <HomeOutlined />,
+      label: '首页',
+    },
+    {
+      key: '/system',
+      icon: <SettingOutlined />,
+      label: '系统设置',
+      children:[
+        {
+          key: '/system/user',
+          icon: <TeamOutlined />,
+          label: '用户设置',
+        },
+        {
+          key: '/system/role',
+          icon: <SkinOutlined />,
+          label: '角色设置',
+        }
+      ]
+    },
+    {
+      key: '/book',
+      icon: <FolderOpenOutlined />,
+      label: '前端资料',
+    },
+  ]
   useEffect(() => {
     if(document.body.offsetWidth <= 700) setCollapsed(true)
     else setCollapsed(false)
@@ -33,7 +69,7 @@ const Home:React.FC = () => {
       let width = e.target.innerWidth
       if(width <= 700) setCollapsed(true)
       else setCollapsed(false)
-    },500)
+    },200)
     return () => {window.onresize = null}
   },[])
   const navigate = useNavigate()
@@ -46,6 +82,7 @@ const Home:React.FC = () => {
       cancelText: '取消',
       onOk(){
         localStorage.removeItem('token')
+        localStorage.removeItem('name')
         navigate('/login')
       }
     });
@@ -85,7 +122,7 @@ const Home:React.FC = () => {
     ]
   ),[]);
   const [collapsed, setCollapsed] = useState(false);
-  const { menu, user:{name} } = useAppSelector((state) => state.home)
+  const { user:{name} } = useAppSelector((state) => state.home)
 
   return (
     <Layout className={styles.layout}>

@@ -4,14 +4,19 @@ import { Layout, Menu, } from "antd";
 import { menuType } from "@/types/home";
 import type { MenuProps } from 'antd';
 import { getParentKey } from "@/utils";
+import { useAppSelector, useAppDispatch } from '@/hooks'
 
 const { Sider } = Layout;
 
 const Siders:React.FC<{collapsed:boolean,menu:Array<menuType>}> = ({collapsed,menu}) => {
   const navigate = useNavigate()
-  const { pathname } = useLocation()
+  let { pathname } = useLocation()
+  const { currentPathname } = useAppSelector((state) => state.home)
+  pathname = currentPathname || pathname
+  const dispatch = useAppDispatch()
   const defaultOpenKeys = [getParentKey(pathname,menu)]
   const menuClick:MenuProps['onClick'] = ({ key }) => {
+    dispatch({type:'home/updateState',payload:{currentPathname:key}})
     navigate(key)
   }
   return (
@@ -21,6 +26,7 @@ const Siders:React.FC<{collapsed:boolean,menu:Array<menuType>}> = ({collapsed,me
         mode="inline"
         defaultOpenKeys={defaultOpenKeys}
         defaultSelectedKeys={[pathname]}
+        selectedKeys={[pathname]}
         onClick={menuClick}
         items={menu}
       />

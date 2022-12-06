@@ -28,6 +28,7 @@ export interface User {
 }
 
 export interface HomeState {
-  menu:Array<menuType>,
+  // menu:Array<menuType>,
+  currentPathname:string,
   user:User,
 }
