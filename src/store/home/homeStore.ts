@@ -10,6 +10,7 @@ import { update } from './asyncReducers';
 // 初始化state
 const initialState = {
   currentPathname:'',
+  openKeys:[],
   user:{
     id:'',
     name:localStorage.getItem('name') || '外星人'
@@ -51,6 +52,10 @@ export const homeStore = createSlice({
   }
 })
 
-// react-redux自动生成reducer对应的action，可直接通过dispatch调用action
+/* 
+  react-redux自动生成reducer对应的action，可直接通过dispatch调用action
+  使用 export 导出对应的action，在页面中可使用 import 引入，再使用dispatch(updateState())进行调用;
+  也可不导出，直接使用 dispatch({type:'home/updateState',payload:{}})进行调用
+*/
 export const { updateState } = homeStore.actions
 export default homeStore.reducer

@@ -17,7 +17,7 @@ export const getParentKey = (key:string,menu:Array<menuType>,current?:menuType):
       return current ? current.key : item.key
     }else{
       if(item.children){
-        name = getParentKey(key, item.children, item)
+        return getParentKey(key, item.children, item)
       }
     }
   }

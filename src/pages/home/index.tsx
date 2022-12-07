@@ -11,6 +11,8 @@ import {
   SettingOutlined,
   TeamOutlined,
   SkinOutlined,
+  MailOutlined,
+  MessageOutlined,
   ExclamationCircleOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from "antd";
@@ -53,6 +55,23 @@ const Home:React.FC = () => {
           key: '/system/role',
           icon: <SkinOutlined />,
           label: '角色设置',
+        }
+      ]
+    },
+    {
+      key: '/user',
+      icon: <UserOutlined />,
+      label: '个人中心',
+      children:[
+        {
+          key: '/user/msg',
+          icon: <MessageOutlined />,
+          label: '个人信息',
+        },
+        {
+          key: '/user/info',
+          icon: <MailOutlined />,
+          label: '个人动态',
         }
       ]
     },

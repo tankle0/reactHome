@@ -30,5 +30,6 @@ export interface User {
 export interface HomeState {
   // menu:Array<menuType>,
   currentPathname:string,
+  openKeys:string[],
   user:User,
 }
