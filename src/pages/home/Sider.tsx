@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Layout, Menu, } from "antd";
 import { menuType } from "@/types/home";
 import type { MenuProps } from 'antd';
 import { getParentKey } from "@/utils";
-import { useAppSelector, useAppDispatch } from '@/hooks'
+import { useAppSelector, useAppDispatch } from '@/hooks';
 
 const { Sider } = Layout;
 
@@ -16,7 +16,7 @@ const Siders:React.FC<{collapsed:boolean,menu:Array<menuType>}> = ({collapsed,me
   pathname = currentPathname || pathname
   const defaultOpenKeys = [getParentKey(pathname,menu)]
   useEffect(() => {
-    // 初始化时根据当前路由设置默认展开菜单
+    // 页面初始化时根据当前路由设置默认展开菜单
     dispatch({type:'home/updateState',payload:{openKeys:defaultOpenKeys}})
   },[])
   // 子菜单点击事件，设置选中状态及离开二级菜单时折叠父级菜单

@@ -9,9 +9,9 @@ import { update } from './asyncReducers';
 
 // 初始化state
 const initialState = {
-  currentPathname:'',
-  openKeys:[],
-  user:{
+  currentPathname:'', // 当前选中的菜单
+  openKeys:[], // 侧边栏展开的菜单
+  user:{ // 用户信息
     id:'',
     name:localStorage.getItem('name') || '外星人'
   },

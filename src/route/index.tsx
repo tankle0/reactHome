@@ -9,11 +9,8 @@ const Dashboard = lazy(() => import('@/pages/dashboard'))
 const User = lazy(() => import('@/pages/system/user'))
 const Role = lazy(() => import('@/pages/system/role'))
 
-const router  = [
-  {
-    path:'/',
-    element: <Navigate to="/dashboard" /> ,
-  },
+// 侧边栏展示的路由
+export const routers = [
   {
     path:'/dashboard',
     element: <Home /> ,
@@ -38,6 +35,14 @@ const router  = [
       }
     ],
   },
+]
+// 不在侧边栏展示的路由
+const baseRouter  = [
+  {
+    path:'/',
+    element: <Navigate to="/dashboard" /> ,
+  },
+  
   {
     path:'/login',
     element: <Login />
@@ -48,5 +53,9 @@ const router  = [
   },
 ]
 
+const router = [
+  ...routers,
+  ...baseRouter
+]
 
 export default router

@@ -7,7 +7,7 @@ import Login from './pages/login';
 /* 
   路由拦截
 */
-const EnterRouter:React.FC = () => {
+const BeforeEnterRouter:React.FC = () => {
   const token = localStorage.getItem('token')
   const { pathname } = useLocation()
   const navigate = useNavigate()
@@ -32,22 +32,18 @@ const EnterRouter:React.FC = () => {
     }
   },[])
   if(token){
-    if(pathname !== '/login'){
+    if(pathname !== '/login'){ // 已登录，去其他页面直接渲染
       return Router
     }
     return null
   }
-  return <Login />
-}
-  
-const beforeRouteEnter = ():React.ReactNode => {
-  return <EnterRouter />
+  return <Login /> // 没登录，去登录页面，渲染登录页面
 }
 
 const App:React.FC = () => {
   return (
     <div className="App">
-      <EnterRouter />
+      <BeforeEnterRouter />
     </div>
   )
 }

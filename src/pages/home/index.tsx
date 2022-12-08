@@ -30,11 +30,14 @@ const { Header, Content } = Layout;
 const Home:React.FC = () => {
   // 调用异步reducer写法
   // const dispatch = useAppDispatch()
-  // const loginOut = () => {
-  //   dispatch(update({id:'1'}))
-  // }
+  // const loginOut = useCallback(() => {
+  //   dispatch(update({id:'1'})).then(res=>{ // 写法1，在当前页面处理异步结果
+  //     console.log(res,'res...');
+  //   })
+  //   dispatch(update({id:'1'})) // 写法2，在react-redux中处理异步结果
+  // },[])
 
-  // menu建议写在页面内，因为内部包含图标组件，写在redux内不符合redux规定，控制台报错，详见store文件顶部文档
+  // menu建议写在页面内，因为内部包含图标组件，写在redux内不符合redux规定，控制台报错，详见homeStore文件顶部文档
   const menu = [
     {
       key: '/dashboard',
@@ -81,7 +84,10 @@ const Home:React.FC = () => {
       label: '前端资料',
     },
   ]
-  useEffect(() => {
+  const [collapsed, setCollapsed] = useState(false); // 待改造，统一移到redux内
+  const { user:{name} } = useAppSelector((state) => state.home)
+
+  useEffect(() => { //页面初始化根据屏幕大小设置菜单折叠及增加页面窗口大小监听器
     if(document.body.offsetWidth <= 700) setCollapsed(true)
     else setCollapsed(false)
     window.onresize = _.throttle((e:any) => {
@@ -140,8 +146,6 @@ const Home:React.FC = () => {
       }
     ]
   ),[]);
-  const [collapsed, setCollapsed] = useState(false);
-  const { user:{name} } = useAppSelector((state) => state.home)
 
   return (
     <Layout className={styles.layout}>
