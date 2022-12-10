@@ -85,7 +85,7 @@ const Home:React.FC = () => {
     },
   ]
   const [collapsed, setCollapsed] = useState(false); // 待改造，统一移到redux内
-  const { user:{name} } = useAppSelector((state) => state.home)
+  const { user:{name},breadArr } = useAppSelector((state) => state.home)
 
   useEffect(() => { //页面初始化根据屏幕大小设置菜单折叠及增加页面窗口大小监听器
     if(document.body.offsetWidth <= 700) setCollapsed(true)
@@ -171,7 +171,7 @@ const Home:React.FC = () => {
               className: styles.trigger,
               onClick: () => setCollapsed(!collapsed),
             })}
-            <Bread breadArr={[{path:'/dashboard',name:'首页'},{path:'/dashboard',name:'系统设置'}]} />
+            <Bread breadArr={breadArr} />
           </div>
           <div className={styles.contentMain}>
             <Suspense fallback={<Loading />}>

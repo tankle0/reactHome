@@ -11,6 +11,9 @@ import { update } from './asyncReducers';
 const initialState = {
   currentPathname:'', // 当前选中的菜单
   openKeys:[], // 侧边栏展开的菜单
+  breadArr:[ // 面包屑导航栏菜单
+    {path:'/dashboard',name:'首页'}
+  ],
   user:{ // 用户信息
     id:'',
     name:localStorage.getItem('name') || '外星人'

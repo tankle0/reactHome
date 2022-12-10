@@ -7,7 +7,15 @@ import styles from './index.module.less';
 export default function ErrorPage(){
   const dispatch = useAppDispatch()
   const back = useCallback(() => {
-    dispatch({type:'home/updateState',payload:{currentPathname:'/dashboard'}})
+    dispatch({
+      type:'home/updateState',
+      payload:{
+        currentPathname:'/dashboard',
+        breadArr:[
+          {path:'/dashboard',name:'首页'}
+        ]
+      }
+    })
   },[])
   return (
     <div className={styles.emptyDiv}>
