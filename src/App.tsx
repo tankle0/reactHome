@@ -35,8 +35,10 @@ const BeforeEnterRouter:React.FC = () => {
     if(pathname !== '/login'){ // 已登录，去其他页面直接渲染
       return Router
     }
+    navigate(-1)
     return null
   }
+  if(pathname !== '/login') navigate(-1)
   return <Login /> // 没登录，去登录页面，渲染登录页面
 }
 

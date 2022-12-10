@@ -12,10 +12,16 @@ const Login:React.FC = () => {
     if(value.remember) localStorage.setItem('name',value.username)
     localStorage.setItem('token',`${value.username}${Date.now()}`)
     message.success(`登录成功，欢迎您，${value.username}！`)
+    dispatch({
+      type:'home/updateState',
+      payload:{
+        user:{name:value.username},
+        currentPathname:'/dashboard',
+        openKeys:['/dashboard'],
+        breadArr:[{path:'/dashboard',name:'首页'}]
+      }
+    })
     navigate('/')
-    setTimeout(() => {
-      dispatch({type:'home/updateState',payload:{user:{name:value.username}}})
-    }, 500);
   },[])
   return (
     <div className={styles.loginDiv}>

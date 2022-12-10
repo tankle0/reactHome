@@ -1,6 +1,6 @@
 import React, { useState, Suspense, useMemo, useCallback, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { Layout, Dropdown, Space, Modal } from "antd"
+import { Layout, Dropdown, Space, Modal, message } from "antd"
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -84,6 +84,8 @@ const Home:React.FC = () => {
       label: '前端资料',
     },
   ]
+
+  const navigate = useNavigate()
   const [collapsed, setCollapsed] = useState(false); // 待改造，统一移到redux内
   const { user:{name},breadArr } = useAppSelector((state) => state.home)
 
@@ -97,7 +99,7 @@ const Home:React.FC = () => {
     },200)
     return () => {window.onresize = null}
   },[])
-  const navigate = useNavigate()
+
   const loginOut = useCallback(() => {
     Modal.confirm({
       title: 'Confirm',
@@ -106,8 +108,8 @@ const Home:React.FC = () => {
       okText: '确认',
       cancelText: '取消',
       onOk(){
-        localStorage.removeItem('token')
-        localStorage.removeItem('name')
+        localStorage.clear()
+        message.success('您已退出登录!')
         navigate('/login')
       }
     });
