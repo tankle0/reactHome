@@ -39,18 +39,18 @@ export const routers = [
 // 不在侧边栏展示的路由
 const baseRouter  = [
   {
-    path:'/',
-    element: <Navigate to="/dashboard" /> ,
+    path: '/',
+    element: <Navigate to="/dashboard" />,
   },
   
   {
-    path:'/login',
+    path: '/login',
     element: <Login />
   },
   {
-    path:'*',
+    path: '*',
     element: <ErrorPage />,
-  },
+  }
 ]
 
 const router = [
