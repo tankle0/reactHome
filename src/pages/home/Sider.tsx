@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Layout, Menu, } from "antd";
 import { menuType } from "@/types/home";
@@ -15,6 +15,9 @@ const Siders:React.FC<{collapsed:boolean,menu:Array<menuType>}> = ({collapsed,me
   const { currentPathname, openKeys } = useAppSelector((state) => state.home)
   pathname = currentPathname || pathname
   const defaultOpenKeys = [getMenu(pathname,menu).path]
+  useEffect(() => {
+    dispatch({type:'home/updateState',payload:{openKeys: collapsed ? [] : defaultOpenKeys}})
+  },[collapsed])
 
   // 子菜单点击事件
   const menuClick:MenuProps['onClick'] = ({ key }) => {
