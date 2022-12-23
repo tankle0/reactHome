@@ -3,12 +3,23 @@ import { Button, Input, Form, Checkbox, message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { getImgUrl } from '@/utils'
 import styles from './index.module.less'
+import { useAppDispatch } from '@/hooks'
 
 const Login:React.FC = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const onFinish = useCallback((value:any) => {
     if(value.remember) localStorage.setItem('name',value.username)
     localStorage.setItem('token',`${value.username}${Date.now()}`)
+    dispatch({
+      type:'home/updateState',
+      payload:{
+        user:{
+          id:value.username,
+          name:value.username
+        }
+      }
+    })
     message.success(`登录成功，欢迎您，${value.username}！`)
     navigate('/dashboard')
   },[])
@@ -23,7 +34,7 @@ const Login:React.FC = () => {
         <div className={styles.formDiv}>
           <Form
             name="basic"
-            labelCol={{ span: 8 }}
+            labelCol={{ span: 6 }}
             wrapperCol={{ span: 16 }}
             scrollToFirstError
             onFinish={onFinish}
@@ -38,7 +49,7 @@ const Login:React.FC = () => {
               name="username"
               rules={[{ required: true, message: '请输入用户名!' }]}
             >
-              <Input />
+              <Input placeholder='请输入用户名：随便输入' />
             </Form.Item>
 
             <Form.Item
@@ -46,14 +57,14 @@ const Login:React.FC = () => {
               name="password"
               rules={[{ required: true, message: '请输入密码!' }]}
             >
-              <Input.Password />
+              <Input.Password placeholder='请输入密码：随便输入' />
             </Form.Item>
 
-            <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
+            <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 6, span: 16 }}>
               <Checkbox>记住我</Checkbox>
             </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
               <Button type="primary" htmlType="submit">
                 登录
               </Button>

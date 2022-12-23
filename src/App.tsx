@@ -18,7 +18,7 @@ const BeforeEnterRouter:React.FC = () => {
   const { breadArr, currentPathname } = useAppSelector((state) => state.home)
   const dispatch = useAppDispatch()
   pathname = pathname || currentPathname
-  let [Routers,setRoute] = useState<ReactElement | null>(null)
+  let [Routers,setRouter] = useState<ReactElement | null>(null)
   useEffect(() => {
     if(token){
       dispatch({
@@ -30,7 +30,7 @@ const BeforeEnterRouter:React.FC = () => {
         }
       })
       if(pathname !== '/login'){ // 已登录，去其他页面直接渲染
-        setRoute(Router)
+        setRouter(Router)
         return
       }
       navigate(-1)
@@ -43,7 +43,7 @@ const BeforeEnterRouter:React.FC = () => {
         navigate('/login')
         return
       }
-      setRoute(<Login />)
+      setRouter(<Login />)
     }
   },[pathname])
   return Routers
