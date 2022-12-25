@@ -21,7 +21,7 @@ const initialState = {
 } as HomeState
 
 // createSlice为模块化创建
-export const homeStore = createSlice({
+const homeStore = createSlice({
   name:'home',
   initialState,
   // 同步reducers
@@ -61,4 +61,5 @@ export const homeStore = createSlice({
   也可不导出，直接使用 dispatch({type:'home/updateState',payload:{}})进行调用
 */
 export const { updateState } = homeStore.actions
+// createSlice 方法创建模块化store，会返回新的reducer进行调用；文档地址：https://react-redux.js.org/tutorials/quick-start
 export default homeStore.reducer
